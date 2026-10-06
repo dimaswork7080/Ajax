@@ -17,6 +17,7 @@
     </p>
 
     <form method="post">
+        @Html.AntiForgeryToken()
 
         <div class="form-group">
             <label>Имя-фамилия:</label>
@@ -89,11 +90,11 @@
     </form>
 
     @* <h1>Расширить анкету. Добавить:</h1>
-    <h2>1. Выбор города через select</h2>
-    <h2>2. Выбор основного языка программирования</h2>
-    <h2>3. Формат обучения (очно, заочно, дистанционное)</h2>
-    <h2>4. Инфомация о себе через тег textarea</h2>
-    <h2>5. Дополнить список технологий</h2> *@
+        <h2>1. Выбор города через select</h2>
+        <h2>2. Выбор основного языка программирования</h2>
+        <h2>3. Формат обучения (очно, заочно, дистанционное)</h2>
+        <h2>4. Инфомация о себе через тег textarea</h2>
+        <h2>5. Дополнить список технологий</h2> *@
 
     <div id="result" class="student-car">
         <div class="student-card-header">
@@ -143,10 +144,18 @@
         </div>
     }
 
+    <div class="student-section">
+        <h2>Список студентов</h2>
+        <div id="students-list"></div>
+    </div>
+
 </div>
 
 <script>
     const form = document.querySelector("form");
+    const button = form.querySelector("button[type='submit']");
+    const status = document.querySelector("#status");
+    const studentList = document.querySelector("#students-list");
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -156,15 +165,147 @@
         button.disabled = true;
 
         const formData = new FormData(form);
-        const response = await fetch("", {
-            method: "POST",
-            body: formData
-        });
+        try {
+            const response = await fetch("", {
+                method: "POST",
+                body: formData
+            });
 
-        const data = await response.json();
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        document.querySelector("#result").textContent = data;
-        button.disabled = false;
-        button.textContent = "Анкета успешно отправлена (❁´◡`❁)";
+            if (!response.ok) {
+                throw new Error("Ошибка сервера");
+            }
+
+            const data = await response.json();
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            document.querySelector("#result-name").textContent = data.name;
+            document.querySelector("#result-phone").textContent = data.phone;
+            document.querySelector("#result-email").textContent = data.email;
+            document.querySelector("#result-speciality").textContent = data.speciality;
+            document.querySelector("#result-course").textContent = data.course;
+            document.querySelector("#result-bithdate").textContent = data.bithDate;
+            document.querySelector("#result-technologies").textContent = data.technologies;
+
+            document.querySelector("#result").style.display = "block";
+            button.textContent = "Анкета успешно отправлена (❁´◡`❁)";
+
+            await loadStudents();
+
+            form.reset();
+        } catch (err) {
+            console.log(err);
+            status.textContent = "Не удалось отправить анкету";
+        } finally {
+            button.disabled = false;
+            button.textContent = "Отправить";
+        }
+    })
+
+    async function loadStudents() {
+        try {
+            const response = await fetch("");
+            if (!response.ok) {
+                throw new Error("Ошибка загрузки студентов");
+            }
+            const students = await response.json();
+            studentList.innerHTML = '';
+
+            students.forEach(student => {
+                const card = document.createElement("div");
+                card.className = "student-card";
+                card.innerHTML = `
+                    <div class="student-card-header">
+                        <div>
+                            <h2>
+                                ${student.name}
+                            </h2>
+                            <p>
+                                ${student.speciality}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="student-info">
+                        <div class="info-item">
+                            <span>
+                                Телефон: 
+                            </span>
+                            <strong>
+                                ${student.phone}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Email: 
+                            </span>
+                            <strong>
+                                ${student.email}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Курс: 
+                            </span>
+                            <strong>
+                                ${student.course}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Дата рождения: 
+                            </span>
+                            <strong>
+                                ${student.birthDate}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Технологии: 
+                            </span>
+                            <strong>
+                                ${student.technologies.join(", ")}
+                            </strong>
+                        </div>
+                    </div>
+                    <button 
+                        class="delete-button" 
+                        onclick="deleteStudent(${student.id})">
+                        Удалить
+                    </button>
+                    `;
+            });
+        }
+    }
+
+    async function deleteStudent(id) {
+        try{
+            const token = document.querySelector(
+                'input[name="_RequestVerificationToken"]'
+            ).value;
+
+            const response = await fetch("?handler=Delete&id=" + id, {
+                method = "POST",
+                headers: {
+                    "RequestVerificationToken": token
+                }
+            });
+
+            if(!response.ok){
+                throw new Error("Ошибка удаления");
+            }
+
+            const result = await response.json();
+
+            if(result.success){
+                status.textContent = "Анкета студента удалена (❁´◡`❁)";
+                await loadStudents();
+            }
+        }catch(err){
+            console.error(err);
+            status.textContent = "Не удалось удалить анкету студента";
+        }
+    }
+    form.addEventListener("reset", function () {
+        document.querySelector("#result").style.display = "none";
+        document.querySelector("#status").textContent = "";
     })
 </script>
