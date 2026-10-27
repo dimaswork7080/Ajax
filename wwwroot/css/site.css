@@ -1,9 +1,9 @@
 /* Общие стили */
-html{
+html {
     min-height: 100%;
 }
 
-body{
+body {
     min-height: 100vh;
     margin: 0;
     display: flex;
@@ -15,18 +15,20 @@ body{
     background-size: cover;
     background-attachment: fixed;
 }
-.site-main{
-    flex:1;
+
+.site-main {
+    flex: 1;
     width: 100%;
 }
+
 /* Header */
-.site-header{
+.site-header {
     width: 100%;
     background: white;
     border-bottom: 1px solid #999;
 }
 
-.header-container{
+.header-container {
     max-width: 1100px;
     min-height: 80px;
     margin: 0 auto;
@@ -36,7 +38,9 @@ body{
     justify-content: space-between;
     gap: 30px;
 }
-.site-logo, .footer-logo{
+
+.site-logo,
+.footer-logo {
     color: black;
     text-decoration: none;
     font-size: 25px;
@@ -45,32 +49,35 @@ body{
     white-space: nowrap;
 }
 
-.site-logo span, .footer-logo span{
+.site-logo span,
+.footer-logo span {
     color: #003064;
 }
 
-.site-nav{
+.site-nav {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 26px;
 }
-.site-nav a{
+
+.site-nav a {
     text-decoration: none;
     color: black;
 }
 
-.site-nav a:hover{
+.site-nav a:hover {
     color: #003064;
 }
+
 /* Footer */
-.site-footer{
+.site-footer {
     margin-top: 60px;
     background: black;
     color: white;
 }
 
-.footer-container{
+.footer-container {
     max-width: 1100px;
     min-height: 110px;
     margin: 0 auto;
@@ -82,24 +89,24 @@ body{
     gap: 18px;
 }
 
-.footer-logo{
+.footer-logo {
     color: white;
 }
 
-.footer-container p{
+.footer-container p {
     margin: 0;
     color: #999;
     font-size: 14px;
     line-height: 1.5;
 }
 
-.footer-copy{
+.footer-copy {
     color: #999;
     font-size: 12px;
 }
 
-@media (max-width: 760px){
-    .header-container{
+@media (max-width: 760px) {
+    .header-container {
         padding-top: 18px;
         padding-bottom: 18px;
         align-items: self-start;
@@ -107,16 +114,16 @@ body{
         gap: 18px;
     }
 
-    .site-nav{
+    .site-nav {
         gap: 14px 20px;
     }
 
-    .site-nav a{
+    .site-nav a {
         font-size: 13px;
     }
 
-    .footer-container{
-        align-items: self-start; 
+    .footer-container {
+        align-items: self-start;
         gap: 12px;
     }
 }
@@ -217,9 +224,11 @@ body{
     font-size: 16px;
     cursor: pointer;
 }
+
 .clear-button:hover {
     background: #ededed;
 }
+
 /* Вывод анкеты */
 #result {
     margin-top: 25px;
@@ -231,20 +240,21 @@ body{
     display: none;
 }
 
-.home-page, .resumes-page{
+.home-page,
+.resumes-page {
     max-width: 1100px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-.home-hero{
+.home-hero {
     background-color: white;
     padding: 20px;
     border-radius: 15px;
     margin: 15px;
 }
 
-.home-features{
+.home-features {
     background-color: white;
     padding: 20px;
     border-radius: 15px;
@@ -253,7 +263,7 @@ body{
 
 }
 
-.home-button{
+.home-button {
     display: inline-block;
     background-color: #dddddd;
     border-radius: 15px;
@@ -264,29 +274,29 @@ body{
     border: 1px solid #777;
 }
 
-.home-button:hover{
+.home-button:hover {
     opacity: 0.85;
 }
 
-.home-button-seconary{
-    background-color:white;
+.home-button-seconary {
+    background-color: white;
     border: 1px solid #777;
 }
 
-.home-feature{
+.home-feature {
     background-color: #dddddd;
     padding: 10px;
     border-radius: 15px;
     margin: 10px;
 }
 
-.resumes-heading{
+.resumes-heading {
     background: white;
     padding: 20px;
     border-radius: 15px;
 }
 
-.resume-empty{
+.resume-empty {
     background: white;
     padding: 35px;
     border: 1px dashed #ccc;
@@ -294,24 +304,139 @@ body{
     text-align: center;
 }
 
-.resumes-count{
+.resume-details-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #ccc;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.resume-details-button:hover {
+    background-color: #999;
+}
+
+.resumes-count {
     background: white;
     border-radius: 15px;
     padding: 15px;
 }
 
-.resume-card{
+.resume-card {
     padding: 24px;
     border: 1px solid #ccc;
     border-radius: 15px;
     background: white;
     overflow-wrap: anywhere;
+    margin-bottom: 15px;
 }
 
-.resume-card h2{
+.resume-card h2 {
     margin: 8px 0;
 }
 
-.resume-speciality{
+.resume-speciality {
     color: black;
+}
+
+.resume-detail-page {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.resume-back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: black;
+    text-decoration: none;
+}
+
+.resume-detail-card {
+    padding: 20px;
+    border: 1px solid #999;
+    border-radius: 20px;
+    background-color: white;
+    overflow-wrap: anywhere;
+}
+
+.resume-course {
+    color: black;
+}
+
+.resume-detail-section {
+    margin: 20px 0;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+}
+
+.resume-detail-section h2{
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.resume-skills{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.resume-skill{
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: #ccc;
+    color: black;
+}
+
+.resume-search-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 30px 0 20px;
+    padding: 24px;
+    border: 1px solid #ccc;
+}
+
+.search-field{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.search-field label{
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.search-field input,
+.search-field select{
+    width: 100%;
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 25px;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    font: inherit
+}
+
+.search-actions{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.search-reset{
+    padding: 15px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 15px;
 }

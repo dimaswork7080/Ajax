@@ -14,25 +14,49 @@
         <a class="home-button" asp-page="/CreateResume">
             Создать резюме
         </a>
+        <form method="get" class="resume-search-form">
+            <div class="search-field">
+                <label for="search">Имя Кандитата</label>
+                <input type="text" id="search" name="search" value="@Model.Search" placeholder="Имя" />
+            </div>
+            <div class="search-field">
+                <label for="specialityFilter">Специальность</label>
+                <select name="" id="specialityFilter">
+                    <option value="">Все Специальности</option>
+                    @foreach (var speciality in Model.Specialities)
+                    {
+                        <option value="@speciality" selected="@(Model.SpecialityFilter == speciality)">
+                            @speciality</option>
+                    }
+                </select>
+            </div>
+            <div class="search-actios">
+                <button type="submit" class="home-button">Найти резюме</button>
+                <a class="search-reset" asp-page="/Resumes">Сбросить</a>
+            </div>
+        </form>
     </div>
+
 
     <p class="resumes-count">
         Всего резюме:
         @Model.Students.Count
     </p>
 
-    @if(Model.Students.Count == 0){
+    @if (Model.Students.Count == 0)
+    {
         <div class="resume-empty">
             <h2>Пока нет резюме</h2>
             <p>Стань первым - заполни анкету</p>
             <a asp-page="/CreateResume">Создать первое резюме</a>
         </div>
     }
-    else{
+    else
+    {
         <div class="resumes-grid">
             @foreach (var student in Model.Students)
             {
-                <article class="resume-card"> 
+                <article class="resume-card">
                     <p class="resume-card">
                         @student.Speciality
                     </p>
@@ -50,12 +74,11 @@
                         <p>
                             <strong>Технологии:</strong>
                             @(student.Technologies.Length > 0 ?
-                            string.Join(", ", student.Technologies)
-                            : "Не указаны")
+                    string.Join(", ", student.Technologies)
+                    : "Не указаны")
                         </p>
                     </div>
-                    <a class="resume-details-button" asp-page="/Resume"
-                    asp-route-id="@student.Id">Подробнее</a>
+                    <a class="resume-details-button" asp-page="/Resume" asp-route-id="@student.Id">Подробнее</a>
                 </article>
             }
         </div>
